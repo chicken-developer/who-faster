@@ -1,6 +1,7 @@
 import Actors.GameAreaActor
 import Actors.GameAreaActor.GameAreaCommand
 import Config.SysConf
+import CustomFlow.GameAreaFlow
 import akka.http.scaladsl.Http
 import akka.actor.typed.ActorSystem
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
@@ -20,7 +21,7 @@ object ServerEntryPoint {
     import system.dispatchers
 
 
-    val gameBind = Http().newServerAt(SysConf.localHost, SysConf.localPort).bindFlow(finalFlow)
+    val gameBind = Http().newServerAt(SysConf.localHost, SysConf.localPort).bindFlow(GameAreaFlow().finalFlow)
 
     println(s"Server is running on: http:// ${SysConf.localHost} :${SysConf.localPort}")
     println(s"Press ENTER or ANY KEY to stop")

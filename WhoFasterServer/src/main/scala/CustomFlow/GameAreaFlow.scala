@@ -1,7 +1,7 @@
-package Flow
+package CustomFlow
 
 import Actors.GameAreaActor
-import akka.actor.ActorSystem
+import Actors.GameAreaActor.GameAreaCommand
 import akka.actor.typed.{ActorRef, ActorSystem}
 import akka.http.scaladsl.model.ws.{BinaryMessage, Message, TextMessage}
 import akka.http.scaladsl.server.Directives.{get, handleWebSocketMessages, parameter}
@@ -9,7 +9,7 @@ import akka.http.scaladsl.server.Route
 import akka.stream.Materializer
 import akka.stream.scaladsl.{Flow, GraphDSL, Sink, Source}
 
-class GameAreaFlow(implicit val sys: ActorSystem, implicit val materializer: Materializer) {
+case class GameAreaFlow(implicit val system: ActorSystem[GameAreaCommand], implicit val materializer: Materializer) {
   import GameAreaActor._
 
   val gameAreaActor: ActorSystem[GameAreaCommand] = ActorSystem(GameAreaActor(), "GameAreaActor")
@@ -23,6 +23,7 @@ class GameAreaFlow(implicit val sys: ActorSystem, implicit val materializer: Mat
         ???
       }
     }
+
   def websocketFlow: Flow[Message, Message, Any] = Flow[Message].map {
     case tm: TextMessage =>
       TextMessage(Source.single("Server says back:") ++ tm.textStream ++ Source.single("!"))
