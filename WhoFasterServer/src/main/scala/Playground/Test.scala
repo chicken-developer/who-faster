@@ -1,5 +1,0 @@
-package Playground
-
-class Test {
-
-}

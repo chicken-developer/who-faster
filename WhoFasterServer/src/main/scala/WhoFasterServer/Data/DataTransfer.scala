@@ -1,4 +1,4 @@
-package Data
+package WhoFasterServer.Data
 
 object DataTransfer {
   trait DataTransfer

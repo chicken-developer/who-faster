@@ -1,6 +1,6 @@
-package Actors
+package WhoFasterServer.Actors
 
-import Data.DataTransfer.{Motion, Player}
+import WhoFasterServer.Data.DataTransfer.{Motion, Player}
 import akka.actor.typed.{ActorRef, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 
