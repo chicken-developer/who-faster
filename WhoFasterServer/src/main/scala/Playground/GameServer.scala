@@ -97,9 +97,9 @@ object GameServer {
       case Fail(ex) => ex
     }, bufferSize = 10, overflowStrategy = OverflowStrategy.dropHead)
 
-    val actorTypedBasedFlow = ActorFlow.ask(parallelism = 8)(ActorSystem(PlayerDataFlow(), "PlayerDataFlowActor"))(makeMessage = (msg, sender) => MessageWithSender(msg, sender))
+    val actorTypedBasedFlow: Flow[Message, Protocol, NotUsed] = ActorFlow.ask(parallelism = 8)(ActorSystem(PlayerDataFlow(), "PlayerDataFlowActor"))(makeMessage = (msg, sender) => MessageWithSender(msg, sender))
 
-    val superSink = ActorSink.actorRefWithBackpressure(
+    val superSink: Sink[Protocol, NotUsed] = ActorSink.actorRefWithBackpressure(
       ref = ActorSystem(SinkActorHandler(), "SuperSink"),
       messageAdapter = (responseActorRef: ActorRef[Ack], element) => MessageWithSenderAndAck(responseActorRef, element),
       onInitMessage = (responseActorRef: ActorRef[Ack]) => Init(responseActorRef),
@@ -107,7 +107,7 @@ object GameServer {
       onCompleteMessage = Complete,
       onFailureMessage = (exception) => FailAndThrowEx(exception))
 
-    val finalGraph = playerSource
+    val finalGraph: ActorRef[Protocol] = playerSource
       .collect {
         case Message(msg) => Message(msg)
       }.via(actorTypedBasedFlow).to(superSink).run()
