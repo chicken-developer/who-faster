@@ -32,3 +32,16 @@ void AWhoFasterCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 }
 
+void AWhoFasterCharacter::OpenLobby()
+{
+	
+}
+
+void AWhoFasterCharacter::CallOpenLevel(const FString& Address)
+{
+}
+
+void AWhoFasterCharacter::CallClientTravel(const FString& Address)
+{
+}
+

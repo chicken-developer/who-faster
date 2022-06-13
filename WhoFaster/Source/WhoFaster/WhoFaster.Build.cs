@@ -8,7 +8,7 @@ public class WhoFaster : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "SocketIOClient", "SocketIOLib", "Json", "SIOJson" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
